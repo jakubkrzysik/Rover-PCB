@@ -1,0 +1,15 @@
+# KiCad backup files
+*-backups/
+*.bak
+
+# KiCad lock files
+~*.lck
+
+# KiCad auto save
+\#auto_saved_files\#
+
+# Temporary files
+temp-*
+*.dsn
+_autosave*
+
