@@ -255,4 +255,4 @@ Każdy element został powiązany z konkretnym, pasującym footprintem w program
 | 45 | C7, C8 | 10n | `SMD 0603 (1608 Metric)` | **Yageo CC0603KRX7R9BB103** | Kondensator ceramiczny MLCC SMD 0603 X7R 10nF 50V | 2 |
 | 46 | C9, C10 | 18pF | `SMD 0603 (1608 Metric)` | **CC0603JRNPO9BN180** | Kondensator ceramiczny MLCC SMD 0603 NP0 18pF 50V (dla rezonatora Y2) | 2 |
 | 47 | Y2 | 8MHz | `Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm_HandSoldering` | **NX3225GD-8.000M-STD-CRA-3** | Rezonator kwarcowy SMD 3.2x2.5mm (dla STM32H7) | 1 |
-| 48 | J75, J76, J77, J78, J79 | TEST_PAD | `TestPoint:TestPoint_Pad_D1.5mm` | **Pady na PCB** | Punkty testowe zasilania i masy (5V, GND, 24V, 3.3V, 12V) - nie wymagają dodatkowego montażu | 5 |
+
