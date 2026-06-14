@@ -165,6 +165,42 @@ Wyjścia zasilania służą do zasilania urządzeń o dużym poborze prądu.
 
 ---
 
+## Parametry Fizyczne PCB i Klasy Połączeń
+
+Płytki w projekcie zostały zaprojektowane z określonym stackupem i regułami szerokości połączeń w programie KiCad.
+
+### 1. Ułożenie Warstw (Stackup) dla Płytki Głównej
+Płytka Główna (`Rover_PCB.kicad_pcb`) jest płytką **4-warstwową** o grubości laminatu **1.6 mm** ze standardową grubością miedzi **35 µm (1 oz)** na wszystkich warstwach:
+* **F.Cu (Top)** — Zewnętrzna górna warstwa sygnałowa/mieszana.
+* **In1.Cu (Internal 1)** — Wewnętrzna warstwa sygnałowo-zasilająca.
+* **In2.Cu (Internal 2)** — Wewnętrzna dedykowana warstwa zasilania (szyna power).
+* **B.Cu (Bottom)** — Zewnętrzna dolna warstwa sygnałowa/mieszana.
+
+Dielektryk między warstwami zewnętrznymi a wewnętrznymi stanowi prepreg FR4 o grubości **0.1 mm**, a rdzeń wewnętrzny (core) ma grubość **1.24 mm**.
+
+### 2. Klasy Netów (Net Classes) i Trasowanie
+W projekcie skonfigurowano dedykowane klasy połączeń, dopasowane do obciążalności prądowej oraz typu sygnałów:
+
+| Klasa Połączeń | Szerokość ścieżki | Odstęp (Clearance) | Średnica przelotki | Wiercenie przelotki | Zastosowanie / Przypisane Połączenia |
+| :--- | :---: | :---: | :---: | :---: | :--- |
+| **`Default`** | **0.20 mm** | 0.20 mm | 0.60 mm | 0.30 mm | Sygnały logiczne mikrokontrolera, GPIO, szyna `/+3.3V` |
+| **`CAN`** | **0.25 mm** | 0.20 mm | 0.60 mm | 0.30 mm | Różnicowe linie magistrali CAN (`/CANH`, `/CANL`, `/CANH_ETH`, `/CANL_ETH`) |
+| **`GND`** | **0.50 mm** | 0.20 mm | 0.80 mm | 0.40 mm | Masa główna układu (`/GND`) |
+| **`Power10A`** | **4.00 mm** | 0.30 mm | 1.50 mm | 0.80 mm | Główna szyna wysokoprądowa zasilania `/+48V` |
+| **`Power5A`** | **2.00 mm** | 0.30 mm | 1.20 mm | 0.60 mm | Szyny zasilania `/+12V` oraz `/+24V` |
+| **`Power1A`** | **0.50 mm** | 0.20 mm | 0.80 mm | 0.40 mm | Szyna zasilania logiki `/+5V` |
+| **`USB_FS`** | **0.20 mm** | 0.15 mm | 0.60 mm | 0.30 mm | Sygnały różnicowe portu USB-C (`/D-`, `/D+`) |
+
+### 3. Niestandardowe Szerokości Ścieżek (Ręczne/Custom)
+W celu optymalizacji trasowania w gęstych obszarach lub specjalnych wyprowadzeń zdefiniowano i użyto:
+* **0.10 mm**: użyte do wyprowadzenia linii portu szeregowego **`/RX2`** na warstwie górnej (do MCU).
+* **1.00 mm**: użyte w krytycznych punktach zasilania oraz masy.
+* **1.1018 mm** oraz **1.5998 mm**: lokalne przewężenia (neckdown) na linii zasilania **`/+24V`**.
+
+*Uwaga: Płytka Zasilania (`Rover_PCB _Power.kicad_pcb`) wykorzystuje standardową szerokość ścieżek **0.20 mm** dla wszystkich sygnałów, a główne zasilania i masa są tam dystrybuowane za pomocą rozległych wylewek miedzianych (zones).*
+
+---
+
 ## Wykaz Części (BOM) do Złożenia Płytki
 
 Poniższa tabela zawiera kompletny wykaz wszystkich elementów niezbędnych do zmontowania płytek (Płytki Głównej oraz Płytki Zasilania).
