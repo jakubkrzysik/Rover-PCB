@@ -572,7 +572,7 @@
       },
       {
         "netclass": "Power5A",
-        "pattern": ""
+        "pattern": "/+24V"
       },
       {
         "netclass": "Power10A",
@@ -592,7 +592,7 @@
       },
       {
         "netclass": "GND",
-        "pattern": ""
+        "pattern": "/GND"
       },
       {
         "netclass": "USB_FS",

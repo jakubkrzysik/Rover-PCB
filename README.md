@@ -167,10 +167,10 @@ Wyjścia zasilania służą do zasilania urządzeń o dużym poborze prądu.
 
 ## Parametry Fizyczne PCB i Klasy Połączeń
 
-Płytki w projekcie zostały zaprojektowane z określonym stackupem i regułami szerokości połączeń w programie KiCad.
+Obie płytki w projekcie (Płytka Główna oraz Płytka Zasilania) zostały zaprojektowane z określonym stackupem i regułami szerokości połączeń w programie KiCad.
 
-### 1. Ułożenie Warstw (Stackup) dla Płytki Głównej
-Płytka Główna (`Rover_PCB.kicad_pcb`) jest płytką **4-warstwową** o grubości laminatu **1.6 mm** ze standardową grubością miedzi **35 µm (1 oz)** na wszystkich warstwach:
+### 1. Ułożenie Warstw (Stackup)
+Płytka Główna (`Rover_PCB.kicad_pcb`) oraz Płytka Zasilania (`Rover_PCB _Power.kicad_pcb`) posiadają identyczny, profesjonalny **4-warstwowy** stackup o łącznej grubości laminatu **1.6 mm** ze standardową grubością miedzi **35 µm (1 oz)** na wszystkich warstwach miedzianych:
 * **F.Cu (Top)** — Zewnętrzna górna warstwa sygnałowa/mieszana.
 * **In1.Cu (Internal 1)** — Wewnętrzna warstwa sygnałowo-zasilająca.
 * **In2.Cu (Internal 2)** — Wewnętrzna dedykowana warstwa zasilania (szyna power).
@@ -178,8 +178,8 @@ Płytka Główna (`Rover_PCB.kicad_pcb`) jest płytką **4-warstwową** o grubo�
 
 Dielektryk między warstwami zewnętrznymi a wewnętrznymi stanowi prepreg FR4 o grubości **0.1 mm**, a rdzeń wewnętrzny (core) ma grubość **1.24 mm**.
 
-### 2. Klasy Netów (Net Classes) i Trasowanie
-W projekcie skonfigurowano dedykowane klasy połączeń, dopasowane do obciążalności prądowej oraz typu sygnałów:
+### 2. Klasy Netów (Net Classes)
+W obu projektach skonfigurowano analogiczne dedykowane klasy połączeń dopasowane do obciążalności prądowej oraz typu sygnałów:
 
 | Klasa Połączeń | Szerokość ścieżki | Odstęp (Clearance) | Średnica przelotki | Wiercenie przelotki | Zastosowanie / Przypisane Połączenia |
 | :--- | :---: | :---: | :---: | :---: | :--- |
@@ -191,13 +191,28 @@ W projekcie skonfigurowano dedykowane klasy połączeń, dopasowane do obciąża
 | **`Power1A`** | **0.50 mm** | 0.20 mm | 0.80 mm | 0.40 mm | Szyna zasilania logiki `/+5V` |
 | **`USB_FS`** | **0.20 mm** | 0.15 mm | 0.60 mm | 0.30 mm | Sygnały różnicowe portu USB-C (`/D-`, `/D+`) |
 
-### 3. Niestandardowe Szerokości Ścieżek (Ręczne/Custom)
-W celu optymalizacji trasowania w gęstych obszarach lub specjalnych wyprowadzeń zdefiniowano i użyto:
-* **0.10 mm**: użyte do wyprowadzenia linii portu szeregowego **`/RX2`** na warstwie górnej (do MCU).
-* **1.00 mm**: użyte w krytycznych punktach zasilania oraz masy.
-* **1.1018 mm** oraz **1.5998 mm**: lokalne przewężenia (neckdown) na linii zasilania **`/+24V`**.
+### 3. Trasowanie i Szerokości Ścieżek na Płytkach
 
-*Uwaga: Płytka Zasilania (`Rover_PCB _Power.kicad_pcb`) wykorzystuje standardową szerokość ścieżek **0.20 mm** dla wszystkich sygnałów, a główne zasilania i masa są tam dystrybuowane za pomocą rozległych wylewek miedzianych (zones).*
+#### A. Płytka Główna (`Rover_PCB.kicad_pcb`)
+* **Trasy wysokoprądowe:** Wytrasowane z szerokościami **4.00 mm** (linia `+48V`) oraz **2.00 mm** (linie `+12V` i `+24V`).
+* **Zasilanie logiki i masa:** Wytrasowane szerokością **0.50 mm** (dystrybucja masy `/GND` oraz szyna `+5V`).
+* **Sygnały CAN:** Szerokość ścieżek wynosi **0.25 mm**.
+* **Sygnały domyślne:** Ścieżki sygnałowe mikrokontrolera STM32 mają szerokość **0.20 mm**.
+* **Ścieżki niestandardowe (Custom/Ręczne):**
+  * **0.10 mm** (5 segmentów) – użyte w linii **`/RX2`** na warstwie górnej w celu wyprowadzenia trasy z gęstego obszaru wyprowadzeń MCU.
+  * **1.00 mm** (5 segmentów) – użyte lokalnie w masie `/GND` oraz w linii `Net-(J1-Pin_1)`.
+  * **1.1018 mm** oraz **1.5998 mm** – lokalne przewężenia (neckdown) na linii zasilania `+24V`.
+
+#### B. Płytka Zasilania (`Rover_PCB _Power.kicad_pcb`)
+* **Trasy wysokoprądowe:** Wytrasowane z szerokościami **4.00 mm** (linia `+48V` - 25 segmentów) oraz **2.00 mm** (linie `+12V` - 64 segmenty, `+24V` - 43 segmenty, `+48V` - 6 segmentów).
+* **Zasilanie logiki i masa:** Wytrasowane szerokością **0.50 mm** (dystrybucja linii `/GND` - 19 segmentów oraz szyna `+5V` - 22 segmenty).
+* **Sygnały CAN:** Wytrasowane ścieżkami o szerokości **0.25 mm** (łącznie 73 segmenty dla `/CANH` i `/CANL`).
+* **Sygnały domyślne:** Wytrasowane ścieżkami o szerokości **0.20 mm** (łącznie 397 segmentów).
+* **Ścieżki niestandardowe i przewężenia (Custom/Ręczne):**
+  * **1.6998 mm** (3 segmenty) – w liniach `+12V` oraz `+48V`.
+  * **1.7018 mm** (2 segmenty) – w linii `+12V`.
+  * **2.6998 mm** (2 segmenty) – w linii `+48V`.
+  * *Uwaga: Główne przesyłanie wysokich prądów na Płytce Zasilania jest dodatkowo wspierane przez rozległe wylewki miedziane (zones) na warstwach zewnętrznych i wewnętrznych.*
 
 ---
 
