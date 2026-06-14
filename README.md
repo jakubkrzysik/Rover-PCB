@@ -61,6 +61,11 @@ Poniższa lista opisuje przeznaczenie wszystkich złączy na obu płytkach oraz 
 | **J46** | `FFC_30` | FFC Socket 30-pin (1.0mm) | Port taśmy sygnałowej i oświetlenia tylnego/statusowego, łączący z płytką zasilania. |
 | **J47** | `FFC_20` | FFC Socket 20-pin (1.0mm) | Port taśmy sygnałowej dla belek tensometrycznych i czujników NTC, łączący z płytką zasilania. |
 | **J72** | `FFC_6` | FFC Socket 6-pin (1.0mm) | Port taśmy interfejsu SWD (ST-LINK), łączący z płytką zasilania. |
+| **J75** | `TEST_PAD 5V` | Pad testowy (1.5mm) | Punkt testowy napięcia 5V na płytce głównej. |
+| **J76** | `TEST_PAD GND` | Pad testowy (1.5mm) | Punkt testowy masy (GND) na płytce głównej. |
+| **J77** | `TEST_PAD 24V` | Pad testowy (1.5mm) | Punkt testowy napięcia 24V na płytce głównej. |
+| **J78** | `TEST_PAD 3.3V` | Pad testowy (1.5mm) | Punkt testowy napięcia 3.3V na płytce głównej. |
+| **J79** | `TEST_PAD 12V` | Pad testowy (1.5mm) | Punkt testowy napięcia 12V na płytce głównej. |
 
 ### 2. Płytka Zasilania (Złącza Wykonawcze i Dystrybucja Zasilania - `Rover_PCB _Power.kicad_pcb`)
 
@@ -212,3 +217,6 @@ Każdy element został powiązany z konkretnym, pasującym footprintem w program
 | 43 | U5, U6 | VNH5019A-E | `MultiPowerSO-30 (STMicroelectronics)` | **VNH5019ATR-E** | Mostek H - sterownik silników DC szczotkowych (30A/41V) | 2 |
 | 44 | D3 | LED | `LED 5.0 mm (THT)` | **WP7113ID** | Dioda LED czerwona 5mm (THT) | 1 |
 | 45 | C7, C8 | 10n | `SMD 0603 (1608 Metric)` | **Yageo CC0603KRX7R9BB103** | Kondensator ceramiczny MLCC SMD 0603 X7R 10nF 50V | 2 |
+| 46 | C9, C10 | 18pF | `SMD 0603 (1608 Metric)` | **CC0603JRNPO9BN180** | Kondensator ceramiczny MLCC SMD 0603 NP0 18pF 50V (dla rezonatora Y2) | 2 |
+| 47 | Y2 | 8MHz | `Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm_HandSoldering` | **NX3225GD-8.000M-STD-CRA-3** | Rezonator kwarcowy SMD 3.2x2.5mm (dla STM32H7) | 1 |
+| 48 | J75, J76, J77, J78, J79 | TEST_PAD | `TestPoint:TestPoint_Pad_D1.5mm` | **Pady na PCB** | Punkty testowe zasilania i masy (5V, GND, 24V, 3.3V, 12V) - nie wymagają dodatkowego montażu | 5 |

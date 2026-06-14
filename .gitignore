@@ -13,3 +13,5 @@ temp-*
 *.dsn
 _autosave*
 
+# KiCad footprint info cache
+fp-info-cache
